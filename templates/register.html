@@ -1,0 +1,45 @@
+{% extends "layout.html" %}
+
+{% block title %}Create Account - CM Manager{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center py-5">
+    <div class="col-md-5 col-lg-4">
+        <div class="card shadow-lg border-0 rounded-4">
+            <div class="card-body p-5">
+                <div class="text-center mb-4">
+                    <div class="display-6 text-success mb-2">
+                        <i class="bi bi-person-plus-fill"></i>
+                    </div>
+                    <h3 class="fw-bold text-dark">Register</h3>
+                    <p class="text-muted small">Comece a gerenciar suas obras hoje</p>
+                </div>
+
+                <form action="/register" method="POST">
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold text-secondary small">Username</label>
+                        <input type="text" name="username" class="form-control bg-light shadow-none" placeholder="Escolha um usuário" required>
+                        <div class="form-text text-muted small">Este será seu nome de acesso único.</div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label fw-semibold text-secondary small">Password</label>
+                        <input type="password" name="password" class="form-control bg-light shadow-none" placeholder="Crie uma senha forte" required>
+                    </div>
+
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-success btn-lg shadow-sm fw-bold">
+                            Criar Minha Conta <i class="bi bi-check-lg ms-2"></i>
+                        </button>
+                    </div>
+                </form>
+
+                <div class="text-center mt-4">
+                    <p class="text-muted small mb-0">Já possui cadastro?</p>
+                    <a href="/login" class="fw-bold text-decoration-none text-success">Fazer Login</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

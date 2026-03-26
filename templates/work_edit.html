@@ -1,0 +1,51 @@
+{% extends "layout.html" %}
+
+{% block title %}Editar Projeto{% endblock %}
+
+{% block content %}
+<div class="d-flex align-items-center mb-4 border-bottom pb-3">
+    <a href="/" class="btn btn-outline-secondary btn-sm me-3">
+        <i class="bi bi-arrow-left"></i> Cancelar
+    </a>
+    <h2 class="fw-bold text-dark mb-0">Editar: {{ work.name }}</h2>
+</div>
+
+<div class="row justify-content-center">
+    <div class="col-md-10">
+        <form action="/works/{{ work.id }}/edit" method="post">
+            <div class="row mt-3">
+                <div class="col-md-6 mb-4">
+                    <label class="form-label fw-bold text-secondary">Nome da Obra</label>
+                    <input type="text" name="name" class="form-control form-control-lg shadow-sm" value="{{ work.name }}" required>
+                </div>
+                <div class="col-md-6 mb-4">
+                    <label class="form-label fw-bold text-secondary">Cliente</label>
+                    <input type="text" name="client" class="form-control form-control-lg shadow-sm" value="{{ work.client }}" required>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    <label class="form-label fw-bold text-secondary">Data de Início</label>
+                    <input type="date" name="start_date" class="form-control form-control-lg shadow-sm" value="{{ work.start_date }}">
+                </div>
+                <div class="col-md-6 mb-4">
+                    <label class="form-label fw-bold text-secondary">Status</label>
+                    <select name="status" class="form-select form-select-lg shadow-sm">
+                        <option value="Planned" {% if work.status == 'Planned' %}selected{% endif %}>Planejado</option>
+                        <option value="In Progress" {% if work.status == 'In Progress' %}selected{% endif %}>Em Andamento</option>
+                        <option value="On Hold" {% if work.status == 'On Hold' %}selected{% endif %}>Pausado</option>
+                        <option value="Completed" {% if work.status == 'Completed' %}selected{% endif %}>Concluído</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="d-grid gap-2 mt-4">
+                <button type="submit" class="btn btn-primary btn-lg shadow">
+                    <i class="bi bi-check-lg me-2"></i> Atualizar Informações
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

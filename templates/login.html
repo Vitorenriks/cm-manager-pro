@@ -1,0 +1,54 @@
+{% extends "layout.html" %}
+
+{% block title %}Login - CM Manager{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center py-5">
+    <div class="col-md-5 col-lg-4">
+        <div class="card shadow-lg border-0 rounded-4">
+            <div class="card-body p-5">
+                <div class="text-center mb-4">
+                    <div class="display-6 text-primary mb-2">
+                        <i class="bi bi-person-circle"></i>
+                    </div>
+                    <h3 class="fw-bold text-dark">Welcome Back</h3>
+                    <p class="text-muted small">Acesse sua conta para gerenciar obras</p>
+                </div>
+
+                <form action="/login" method="POST">
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold text-secondary small">Username</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light border-end-0"><i class="bi bi-person"></i></span>
+                            <input type="text" name="username" class="form-control bg-light border-start-0 shadow-none" placeholder="Seu usuário" required autofocus>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label fw-semibold text-secondary small">Password</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light border-end-0"><i class="bi bi-lock"></i></span>
+                            <input type="password" name="password" class="form-control bg-light border-start-0 shadow-none" placeholder="Sua senha" required>
+                        </div>
+                    </div>
+
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-primary btn-lg shadow-sm fw-bold">
+                            Login <i class="bi bi-box-arrow-in-right ms-2"></i>
+                        </button>
+                    </div>
+                </form>
+
+                <div class="text-center mt-4">
+                    <p class="text-muted small mb-0">Novo por aqui?</p>
+                    <a href="/register" class="fw-bold text-decoration-none text-primary">Crie sua conta gratuitamente</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="text-center mt-4 text-muted">
+            <small><i class="bi bi-shield-check"></i> Conexão Segura & Criptografada</small>
+        </div>
+    </div>
+</div>
+{% endblock %}

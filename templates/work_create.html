@@ -1,0 +1,55 @@
+{% extends "layout.html" %}
+
+{% block title %}Novo Projeto{% endblock %}
+
+{% block content %}
+<div class="d-flex align-items-center mb-4 border-bottom pb-3">
+    <a href="/" class="btn btn-outline-secondary btn-sm me-3">
+        <i class="bi bi-arrow-left"></i> Voltar
+    </a>
+    <h2 class="fw-bold text-dark mb-0">Cadastrar Nova Obra</h2>
+</div>
+
+<div class="row justify-content-center">
+    <div class="col-md-10">
+        <form action="/works/create" method="post">
+            <div class="row mt-3">
+                <div class="col-md-6 mb-4">
+                    <label for="name" class="form-label fw-bold text-secondary">Nome da Obra/Projeto</label>
+                    <input type="text" name="name" id="name" class="form-control form-control-lg shadow-sm" placeholder="Ex: Edifício Horizonte" required>
+                </div>
+
+                <div class="col-md-6 mb-4">
+                    <label for="client" class="form-label fw-bold text-secondary">Nome do Cliente</label>
+                    <input type="text" name="client" id="client" class="form-control form-control-lg shadow-sm" placeholder="Ex: João Silva" required>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    <label for="start_date" class="form-label fw-bold text-secondary">Data de Início</label>
+                    <input type="date" name="start_date" id="start_date" class="form-control form-control-lg shadow-sm">
+                </div>
+
+                <div class="col-md-6 mb-4">
+                    <label for="status" class="form-label fw-bold text-secondary">Status Atual</label>
+                    <select name="status" id="status" class="form-select form-select-lg shadow-sm">
+                        <option value="Planned">Planejado</option>
+                        <option value="In Progress" selected>Em Andamento</option>
+                        <option value="On Hold">Pausado</option>
+                        <option value="Completed">Concluído</option>
+                    </select>
+                </div>
+            </div>
+
+            <hr class="my-4">
+
+            <div class="d-grid gap-2 mb-3">
+                <button type="submit" class="btn btn-primary btn-lg shadow">
+                    <i class="bi bi-save me-2"></i> Salvar Projeto
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

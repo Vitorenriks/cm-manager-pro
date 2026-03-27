@@ -4,7 +4,6 @@ from flask_login import login_user, login_required, logout_user, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 from models import get_db_connection, User
 
-# Criamos o Blueprint para conectar as rotas ao app principal
 main = Blueprint('main', __name__)
 
 @main.route('/register', methods=['GET', 'POST'])

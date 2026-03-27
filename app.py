@@ -7,13 +7,12 @@ from routes import main
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'dev_key_123')
 
-# Inicializa o Banco
-init_db()
+with app.app_context():
+    init_db()
 
-# Configuração do Login
 login_manager = LoginManager()
 login_manager.init_app(app)
-login_manager.login_view = 'main.login' # Note o 'main.' devido ao Blueprint
+login_manager.login_view = 'main.login'
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -24,7 +23,6 @@ def load_user(user_id):
         return User(user['id'], user['username'])
     return None
 
-# Registra as rotas
 app.register_blueprint(main)
 
 if __name__ == '__main__':

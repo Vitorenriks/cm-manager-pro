@@ -1,6 +1,16 @@
 # 🏗️ CM Manager Pro - Construction Management MicroSaaS
 
-[🇺🇸 English Version below]
+> 🚀 **Acesse o Projeto:** [https://cm-manager-pro.onrender.com](https://cm-manager-pro.onrender.com)
+
+## 📸 Screenshots
+
+### Login Page
+![Login Screen](screenshots/login.png)
+
+### Main Dashboard
+![Dashboard Screen](screenshots/dashboard.png)
+
+*(English Version below)*
 
 ## 🇧🇷 Sobre o Projeto
 O **CM Manager Pro** é uma plataforma de gestão de obras projetada para trazer eficiência e controle para pequenas e médias construtoras. O sistema centraliza o gerenciamento de projetos, permitindo o acompanhamento em tempo real de status, custos e cronogramas através de uma interface intuitiva e segura.
@@ -29,17 +39,9 @@ O **CM Manager Pro** é uma plataforma de gestão de obras projetada para trazer
 - **Security:** Werkzeug Security / Flask-Login
 - **Frontend:** HTML5, CSS3 (Modern UI), Bootstrap 5, Jinja2
 - **Database:** SQLite (Relational)
-- **Deployment:** Gunicorn (Ready for Render/Heroku)
+- **Deployment:** Gunicorn (Render)
 
 ---
-
-## 📸 Screenshots
-
-### Login Page
-![Login Screen](screenshots/login.png)
-
-### Main Dashboard
-![Dashboard Screen](screenshots/dashboard.png)
 
 ## Instalação e Execução / Setup
 

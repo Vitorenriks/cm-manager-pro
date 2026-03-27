@@ -6,7 +6,6 @@ def init_db():
 
     print("Iniciando atualização do banco de dados...")
 
-    # 1. Criar tabela de usuários (se não existir)
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS users (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -15,8 +14,6 @@ def init_db():
         )
     ''')
 
-    # 2. Garantir que a tabela de obras (works) existe
-    # Adicionamos a coluna user_id para que no futuro cada obra pertença a um dono
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS works (
             id INTEGER PRIMARY KEY AUTOINCREMENT,

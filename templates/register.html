@@ -3,10 +3,12 @@
 {% block title %}Create Account - CM Manager{% endblock %}
 
 {% block content %}
-<div class="row justify-content-center py-5">
-    <div class="col-md-5 col-lg-4">
-        <div class="card shadow-lg border-0 rounded-4">
-            <div class="card-body p-5">
+<div class="auth-wrapper">
+    <div class="auth-card">
+        
+        <div class="card content-card">
+            <div class="card-body p-4 p-md-5">
+                
                 <div class="text-center mb-4">
                     <div class="display-6 text-success mb-2">
                         <i class="bi bi-person-plus-fill"></i>
@@ -18,17 +20,23 @@
                 <form action="{{ url_for('main.register') }}" method="POST">
                     <div class="mb-3">
                         <label class="form-label fw-semibold text-secondary small">Username</label>
-                        <input type="text" name="username" class="form-control bg-light shadow-none" placeholder="Escolha um usuário" required>
-                        <div class="form-text text-muted small">Este será seu nome de acesso único.</div>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light border-end-0 text-muted"><i class="bi bi-person"></i></span>
+                            <input type="text" name="username" class="form-control bg-light border-start-0 shadow-none" placeholder="Escolha um usuário" required autofocus>
+                        </div>
+                        <div class="form-text text-muted small" style="font-size: 0.75rem;">Nome de acesso único para o sistema.</div>
                     </div>
 
                     <div class="mb-4">
                         <label class="form-label fw-semibold text-secondary small">Password</label>
-                        <input type="password" name="password" class="form-control bg-light shadow-none" placeholder="Crie uma senha forte" required>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light border-end-0 text-muted"><i class="bi bi-lock"></i></span>
+                            <input type="password" name="password" class="form-control bg-light border-start-0 shadow-none" placeholder="Crie uma senha forte" required>
+                        </div>
                     </div>
 
-                    <div class="d-grid gap-2">
-                        <button type="submit" class="btn btn-success btn-lg shadow-sm fw-bold">
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-success btn-lg shadow-sm fw-bold py-3">
                             Criar Minha Conta <i class="bi bi-check-lg ms-2"></i>
                         </button>
                     </div>
@@ -40,6 +48,11 @@
                 </div>
             </div>
         </div>
+        
+        <div class="text-center mt-4 text-muted opacity-75">
+            <small><i class="bi bi-shield-check"></i> Proteção de Dados Ativada</small>
+        </div>
+        
     </div>
 </div>
 {% endblock %}

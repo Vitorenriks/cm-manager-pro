@@ -1,55 +1,58 @@
 {% extends "layout.html" %}
-
-{% block title %}Novo Projeto{% endblock %}
+{% block title %}Novo Projeto - CM Manager{% endblock %}
 
 {% block content %}
-<div class="d-flex align-items-center mb-4 border-bottom pb-3">
-    <a href="{{ url_for('main.dashboard') }}" class="btn btn-outline-secondary btn-sm me-3">
-        <i class="bi bi-arrow-left"></i> Voltar
-    </a>
-    <h2 class="fw-bold text-dark mb-0">Cadastrar Nova Obra</h2>
-</div>
-
 <div class="row justify-content-center">
-    <div class="col-md-10">
-        <form action="{{ url_for('main.create_work') }}" method="post">
-            <div class="row mt-3">
-                <div class="col-md-6 mb-4">
-                    <label for="name" class="form-label fw-bold text-secondary">Nome da Obra/Projeto</label>
-                    <input type="text" name="name" id="name" class="form-control form-control-lg shadow-sm" placeholder="Ex: Edifício Horizonte" required>
-                </div>
+    <div class="col-12 col-lg-8"> <div class="d-flex align-items-center mb-3 pb-2 border-bottom">
+            <a href="{{ url_for('main.dashboard') }}" class="btn btn-outline-secondary btn-sm me-3 py-1 px-2" style="font-size: 0.75rem;">
+                <i class="bi bi-arrow-left"></i> Voltar
+            </a>
+            <h5 class="fw-bold text-dark mb-0">Cadastrar Nova Obra</h5>
+        </div>
 
-                <div class="col-md-6 mb-4">
-                    <label for="client" class="form-label fw-bold text-secondary">Nome do Cliente</label>
-                    <input type="text" name="client" id="client" class="form-control form-control-lg shadow-sm" placeholder="Ex: João Silva" required>
-                </div>
+        <div class="card shadow-sm border-0" style="border-radius: 12px;">
+            <div class="card-body p-3 p-md-4">
+                <form action="{{ url_for('main.create_work') }}" method="post">
+                    <div class="row g-3"> <div class="col-md-6">
+                            <label for="name" class="form-label mb-1 fw-bold text-secondary" style="font-size: 0.75rem;">Nome da Obra/Projeto</label>
+                            <input type="text" name="name" id="name" class="form-control form-control-sm bg-light border-0 shadow-none py-2" placeholder="Ex: Edifício Horizonte" required>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="client" class="form-label mb-1 fw-bold text-secondary" style="font-size: 0.75rem;">Nome do Cliente</label>
+                            <input type="text" name="client" id="client" class="form-control form-control-sm bg-light border-0 shadow-none py-2" placeholder="Ex: João Silva" required>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="start_date" class="form-label mb-1 fw-bold text-secondary" style="font-size: 0.75rem;">Data de Início</label>
+                            <input type="date" name="start_date" id="start_date" class="form-control form-control-sm bg-light border-0 shadow-none py-2">
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="status" class="form-label mb-1 fw-bold text-secondary" style="font-size: 0.75rem;">Status Atual</label>
+                            <select name="status" id="status" class="form-select form-select-sm bg-light border-0 shadow-none py-2">
+                                <option value="Planned">Planejado</option>
+                                <option value="In Progress" selected>Em Andamento</option>
+                                <option value="On Hold">Pausado</option>
+                                <option value="Completed">Concluído</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <hr class="my-4 opacity-10">
+
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary btn-sm fw-bold py-2 shadow-sm">
+                            <i class="bi bi-cloud-arrow-up-fill me-2"></i> Salvar Projeto
+                        </button>
+                    </div>
+                </form>
             </div>
-
-            <div class="row">
-                <div class="col-md-6 mb-4">
-                    <label for="start_date" class="form-label fw-bold text-secondary">Data de Início</label>
-                    <input type="date" name="start_date" id="start_date" class="form-control form-control-lg shadow-sm">
-                </div>
-
-                <div class="col-md-6 mb-4">
-                    <label for="status" class="form-label fw-bold text-secondary">Status Atual</label>
-                    <select name="status" id="status" class="form-select form-select-lg shadow-sm">
-                        <option value="Planned">Planejado</option>
-                        <option value="In Progress" selected>Em Andamento</option>
-                        <option value="On Hold">Pausado</option>
-                        <option value="Completed">Concluído</option>
-                    </select>
-                </div>
-            </div>
-
-            <hr class="my-4">
-
-            <div class="d-grid gap-2 mb-3">
-                <button type="submit" class="btn btn-primary btn-lg shadow">
-                    <i class="bi bi-save me-2"></i> Salvar Projeto
-                </button>
-            </div>
-        </form>
+        </div>
+        
+        <p class="text-center mt-3 text-muted" style="font-size: 0.65rem; opacity: 0.6;">
+            <i class="bi bi-info-circle"></i> Todos os campos marcados são obrigatórios para o registro.
+        </p>
     </div>
 </div>
 {% endblock %}

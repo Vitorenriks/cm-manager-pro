@@ -15,6 +15,14 @@
 ## 🇧🇷 Sobre o Projeto
 O **CM Manager Pro** é uma plataforma de gestão de obras projetada para trazer eficiência e controle para pequenas e médias construtoras. O sistema centraliza o gerenciamento de projetos, permitindo o acompanhamento em tempo real de status, custos e cronogramas através de uma interface intuitiva e segura.
 
+## ✨ Principais Funcionalidades / Key Features
+
+* **Dashboard Interativo:** Visão geral de todos os projetos ativos com indicadores visuais de status.
+* **Gestão Completa (CRUD):** Fluxo total de criação, leitura, edição e exclusão de obras com persistência de dados.
+* **Foco em UX (User Experience):** Interface densa e otimizada com escala visual reduzida para evitar rolagens desnecessárias, priorizando a produtividade.
+* **Sistema Multiusuário:** Autenticação robusta onde cada gestor possui seu próprio ambiente isolado e seguro para seus projetos.
+* **Responsividade Total:** Design adaptável para uma experiência fluida tanto em computadores quanto em dispositivos móveis.
+
 ### 🛠️ Diferenciais Técnicos:
 - **Arquitetura Segura:** Autenticação de usuários via `Flask-Login` com proteção de rotas e gestão de sessões.
 - **Criptografia Avançada:** Armazenamento de credenciais utilizando hashes `PBKDF2-SHA256` para máxima segurança dos dados.

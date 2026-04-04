@@ -21,6 +21,14 @@ def get_db_connection():
         
         conn = psycopg2.connect(db_url)
         conn.cursor_factory = psycopg2.extras.DictCursor
+        
+        if not hasattr(conn, 'execute'):
+            def execute_wrapper(sql, params=None):
+                cur = conn.cursor()
+                cur.execute(sql, params)
+                return cur
+            conn.execute = execute_wrapper
+            
         return conn
     else:
         conn = sqlite3.connect(DATABASE)

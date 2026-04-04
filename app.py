@@ -13,10 +13,9 @@ if uri and uri.startswith("postgres://"):
     uri = uri.replace("postgres://", "postgresql://", 1)
 
 app.config['DATABASE_URL'] = uri or 'sqlite:///database.db'
-# ------------------------------------------
 
-with app.app_context():
-    init_db()
+# Inicializa o banco de dados
+init_db()
 
 login_manager = LoginManager()
 login_manager.init_app(app)
@@ -25,20 +24,22 @@ login_manager.login_view = 'main.login'
 @login_manager.user_loader
 def load_user(user_id):
     conn = get_db_connection()
+    db_url = os.environ.get('DATABASE_URL')
+    p = "%s" if db_url else "?"
     
-    if 'postgresql' in app.config['DATABASE_URL']:
-        query = "SELECT id, username FROM users WHERE id = %s"
-    else:
-        query = "SELECT id, username FROM users WHERE id = ?"
-        
-    user = conn.execute(query, (user_id,)).fetchone()
-    conn.close()
-    
-    if user:
-        return User(user[0], user[1]) 
-    return None
+    user = None
+    try:
+        with conn.cursor() as cur:
+            cur.execute(f"SELECT id, username FROM users WHERE id = {p}", (user_id,))
+            row = cur.fetchone()
+            if row:
+                user = User(row[0], row[1])
+    finally:
+        conn.close()
+    return user
 
 app.register_blueprint(main)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host='0.0.0.0', port=port)

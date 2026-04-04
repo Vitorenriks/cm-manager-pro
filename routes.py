@@ -11,22 +11,8 @@ def get_placeholder():
 
 @main.route('/register', methods=['GET', 'POST'])
 def register():
-    if request.method == 'POST':
-        username = request.form.get('username')
-        password = request.form.get('password')
-        hashed_pw = generate_password_hash(password, method='pbkdf2:sha256')
-        p = get_placeholder()
-        try:
-            conn = get_db_connection()
-            with conn.cursor() as cur:
-                cur.execute(f"INSERT INTO users (username, password) VALUES ({p}, {p})", (username, hashed_pw))
-            conn.commit()
-            conn.close()
-            flash("Conta criada com sucesso!", "success")
-            return redirect(url_for('main.login'))
-        except Exception:
-            flash("Erro ao criar conta. Talvez o usuário já exista.", "danger")
-    return render_template('register.html')
+    flash("Novos registros estão desativados no modo demonstração.", "warning")
+    return redirect(url_for('main.login'))
 
 @main.route('/login', methods=['GET', 'POST'])
 def login():
@@ -62,43 +48,28 @@ def dashboard():
 @login_required
 def create_work():
     if request.method == 'POST':
-        p = get_placeholder()
-        conn = get_db_connection()
-        with conn.cursor() as cur:
-            cur.execute(f"INSERT INTO works (name, client, start_date, status) VALUES ({p}, {p}, {p}, {p})",
-                        (request.form['name'], request.form['client'], request.form['start_date'], request.form['status']))
-        conn.commit()
-        conn.close()
-        flash("Obra cadastrada!", "success")
+        flash("Modo demonstração: criação de dados desativada.", "info")
         return redirect(url_for('main.dashboard'))
     return render_template("work_create.html")
 
 @main.route('/works/<int:id>/edit', methods=['GET', 'POST'])
 @login_required
 def edit_work(id):
+    if request.method == 'POST':
+        flash("Modo demonstração: edição de dados desativada.", "info")
+        return redirect(url_for('main.dashboard'))
     p = get_placeholder()
     conn = get_db_connection()
     with conn.cursor() as cur:
         cur.execute(f"SELECT * FROM works WHERE id = {p}", (id,))
         work = cur.fetchone()
-        if request.method == 'POST':
-            cur.execute(f"UPDATE works SET name = {p}, client = {p}, start_date = {p}, status = {p} WHERE id = {p}",
-                         (request.form['name'], request.form['client'], request.form['start_date'], request.form['status'], id))
-            conn.commit()
-            conn.close()
-            return redirect(url_for('main.dashboard'))
     conn.close()
     return render_template("work_edit.html", work=work)
 
 @main.route('/works/<int:id>/delete', methods=['POST'])
 @login_required
 def delete_work(id):
-    p = get_placeholder()
-    conn = get_db_connection()
-    with conn.cursor() as cur:
-        cur.execute(f"DELETE FROM works WHERE id = {p}", (id,))
-    conn.commit()
-    conn.close()
+    flash("Modo demonstração: exclusão de dados desativada.", "info")
     return redirect(url_for('main.dashboard'))
 
 @main.route('/logout')

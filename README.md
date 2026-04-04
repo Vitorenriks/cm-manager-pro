@@ -2,6 +2,18 @@
 
 > 🚀 **Acesse o Projeto:** [https://cm-manager-pro.onrender.com](https://cm-manager-pro.onrender.com)
 
+## 🔑 Acesso para Testes (Modo Demonstração)
+
+Para facilitar a exploração das funcionalidades do sistema, utilize as credenciais abaixo:
+
+| Usuário | Senha |
+| :--- | :--- |
+| `admin` | `1234` |
+
+> **Nota:** O sistema está operando em modo de demonstração para preservação da integridade dos dados.
+
+---
+
 ## 📸 Screenshots
 
 ### Login Page
@@ -10,7 +22,7 @@
 ### Main Dashboard
 ![Dashboard Screen](screenshots/dashboard.png)
 
-*(English Version below)*
+---
 
 ## 🇧🇷 Sobre o Projeto
 O **CM Manager Pro** é uma plataforma de gestão de obras projetada para trazer eficiência e controle para pequenas e médias construtoras. O sistema centraliza o gerenciamento de projetos, permitindo o acompanhamento em tempo real de status, custos e cronogramas através de uma interface intuitiva e segura.
@@ -20,34 +32,33 @@ O **CM Manager Pro** é uma plataforma de gestão de obras projetada para trazer
 * **Dashboard Interativo:** Visão geral de todos os projetos ativos com indicadores visuais de status.
 * **Gestão Completa (CRUD):** Fluxo total de criação, leitura, edição e exclusão de obras com persistência de dados.
 * **Foco em UX (User Experience):** Interface densa e otimizada com escala visual reduzida para evitar rolagens desnecessárias, priorizando a produtividade.
-* **Sistema Multiusuário:** Autenticação robusta onde cada gestor possui seu próprio ambiente isolado e seguro para seus projetos.
-* **Responsividade Total:** Design adaptável para uma experiência fluida tanto em computadores quanto em dispositivos móveis.
+* **Mobile Optimized (Android/iOS):** Template e UX aprimorados especificamente para dispositivos móveis, garantindo agilidade no uso em campo.
+* **Sistema Multiusuário:** Autenticação robusta onde cada gestor possui seu próprio ambiente isolado e seguro.
 
 ### 🛠️ Diferenciais Técnicos:
-- **Arquitetura Segura:** Autenticação de usuários via `Flask-Login` com proteção de rotas e gestão de sessões.
-- **Criptografia Avançada:** Armazenamento de credenciais utilizando hashes `PBKDF2-SHA256` para máxima segurança dos dados.
-- **Interface Pro:** UX focada em produtividade, desenvolvida com Bootstrap 5 e CSS personalizado (Design Clean/SaaS).
-- **Persistência de Dados:** Banco de dados relacional otimizado para operações CRUD rápidas e integridade referencial.
+- **Banco de Dados de Produção:** Migração concluída de SQLite para **PostgreSQL** (via Render), garantindo maior escalabilidade, concorrência e segurança dos dados.
+- **Arquitetura Segura:** Autenticação via `Flask-Login` com proteção de rotas e gestão de sessões.
+- **Criptografia Avançada:** Armazenamento de credenciais utilizando hashes `PBKDF2-SHA256`.
+- **Interface Pro:** UX focada em produtividade, desenvolvida com Bootstrap 5 e CSS personalizado para um design Clean/SaaS.
 
 ---
 
 ## 🇺🇸 About the Project
-**CM Manager Pro** is a construction management MicroSaaS built to streamline workflows for small to medium-sized construction firms. It centralizes project management, enabling real-time tracking of status, costs, and timelines through a secure, high-performance web interface.
+**CM Manager Pro** is a construction management MicroSaaS built to streamline workflows for small to medium-sized construction firms.
 
 ### 🛠️ Technical Highlights:
-- **Production-Ready Auth:** Secure user authentication and session management via `Flask-Login`.
-- **Data Security:** Industry-standard password hashing using `PBKDF2-SHA256`.
-- **Modern UI/UX:** Clean SaaS-style interface built with Bootstrap 5 for professional aesthetics and responsiveness.
-- **Relational Database:** Optimized CRUD operations ensuring data integrity and fast retrieval.
+- **Production Database:** Powered by **PostgreSQL** for high availability and data consistency.
+- **Mobile-First UX:** Enhanced templates optimized for **Android/iOS** devices, perfect for on-site management.
+- **Secure Auth:** Industry-standard password hashing and session management.
 
 ---
 
 ## 🚀 Tech Stack
 - **Backend:** Python 3.x / Flask
-- **Security:** Werkzeug Security / Flask-Login
+- **Database:** **PostgreSQL** (Production) / SQLAlchemy (ORM)
 - **Frontend:** HTML5, CSS3 (Modern UI), Bootstrap 5, Jinja2
-- **Database:** SQLite (Relational)
-- **Deployment:** Gunicorn (Render)
+- **Security:** Werkzeug Security / Flask-Login
+- **Deployment:** Gunicorn / Render
 
 ---
 

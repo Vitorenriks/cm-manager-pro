@@ -16,7 +16,7 @@ def get_db_connection():
     if db_url:
         if db_url.startswith("postgres://"):
             db_url = db_url.replace("postgres://", "postgresql://", 1)
-        conn = psycopg2.connect(db_url)
+        conn = psycopg2.connect(db_url, sslmode='require')
         conn.cursor_factory = psycopg2.extras.DictCursor
         return conn
     else:

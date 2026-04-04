@@ -1,11 +1,19 @@
 import os
 from flask import Flask
 from flask_login import LoginManager
-from models import init_db, get_db_connection, User
+from models import init_db, get_db_connection, User 
 from routes import main
 
 app = Flask(__name__)
+
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'dev_key_123')
+
+uri = os.environ.get('DATABASE_URL')
+if uri and uri.startswith("postgres://"):
+    uri = uri.replace("postgres://", "postgresql://", 1)
+
+app.config['DATABASE_URL'] = uri or 'sqlite:///database.db'
+# ------------------------------------------
 
 with app.app_context():
     init_db()
@@ -17,10 +25,17 @@ login_manager.login_view = 'main.login'
 @login_manager.user_loader
 def load_user(user_id):
     conn = get_db_connection()
-    user = conn.execute("SELECT id, username FROM users WHERE id = ?", (user_id,)).fetchone()
+    
+    if 'postgresql' in app.config['DATABASE_URL']:
+        query = "SELECT id, username FROM users WHERE id = %s"
+    else:
+        query = "SELECT id, username FROM users WHERE id = ?"
+        
+    user = conn.execute(query, (user_id,)).fetchone()
     conn.close()
+    
     if user:
-        return User(user['id'], user['username'])
+        return User(user[0], user[1]) 
     return None
 
 app.register_blueprint(main)

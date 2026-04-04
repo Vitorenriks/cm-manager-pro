@@ -11,44 +11,53 @@
     
     body { 
         background-color: #f8f9fa; 
-        height: 100vh; 
+        min-height: 100vh; /* Permite rolagem suave em telas menores */
         margin: 0;
         display: flex; 
         flex-direction: column; 
         font-family: 'Segoe UI', sans-serif;
         font-size: 0.85rem; 
-        overflow: hidden;
     }
 
-    .navbar { background-color: var(--primary-color) !important; padding: 0.4rem 0; flex-shrink: 0; }
+    .navbar { background-color: var(--primary-color) !important; padding: 0.5rem 0; flex-shrink: 0; }
     
     .main-container { 
         flex: 1; 
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        padding: 1rem 0;
-        overflow-y: auto;
+        padding: 1.5rem 0;
     }
 
-    footer { flex-shrink: 0; padding: 1rem 0; font-size: 0.75rem; }
-</style>
+    .alert { font-size: 0.8rem; padding: 0.6rem 1rem; border-radius: 8px; }
+
+    footer { flex-shrink: 0; padding: 1rem 0; font-size: 0.75rem; background: white; border-top: 1px solid #eee; }
+    </style>
 </head>
 <body>
+
 <nav class="navbar navbar-expand-lg navbar-dark shadow-sm">
     <div class="container">
         <a class="navbar-brand fw-bold d-flex align-items-center" href="{{ url_for('main.dashboard') }}">
             <i class="bi bi-cone-striped me-2"></i> CM Manager
         </a>
+
+        <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon" style="width: 1.2em; height: 1.2em;"></span>
+        </button>
+
         <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ms-auto align-items-center">
+            <ul class="navbar-nav ms-auto align-items-center gap-2 mt-3 mt-lg-0">
                 {% if current_user.is_authenticated %}
                     <li class="nav-item"><a class="nav-link px-2" href="{{ url_for('main.dashboard') }}">Dashboard</a></li>
                     <li class="nav-item"><a class="nav-link px-2" href="{{ url_for('main.create_work') }}">Novo Projeto</a></li>
-                    <li class="nav-item ms-lg-2"><a class="btn btn-outline-light btn-sm py-1 px-3" href="{{ url_for('main.logout') }}">Sair</a></li>
+                    <li class="nav-item w-100 mt-2 mt-lg-0">
+                        <a class="btn btn-outline-light btn-sm py-1 px-4 w-100" href="{{ url_for('main.logout') }}">Sair</a>
+                    </li>
                 {% else %}
-                    <li class="nav-item"><a class="nav-link px-2 text-white" href="{{ url_for('main.login') }}">Entrar</a></li>
-                    <li class="nav-item"><a class="btn btn-light btn-sm fw-bold py-1 px-3 ms-lg-2" href="{{ url_for('main.register') }}">Cadastre-se</a></li>
+                    <li class="nav-item">
+                        <a class="nav-link px-2 text-white" href="{{ url_for('main.login') }}">Entrar</a>
+                    </li>
+                    <li class="nav-item w-100 mt-2 mt-lg-0">
+                        <a class="btn btn-light btn-sm fw-bold py-1 px-4 w-100" href="{{ url_for('main.register') }}">Cadastre-se</a>
+                    </li>
                 {% endif %}
             </ul>
         </div>
@@ -56,25 +65,30 @@
 </nav>
 
 <main class="container main-container">
-    <div class="alert-container mx-auto mb-3" style="max-width: 600px;">
-        {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-                {% for category, message in messages %}
-                    <div class="alert alert-{{ category if category != 'message' else 'info' }} alert-dismissible fade show" role="alert">
-                        {{ message }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" style="padding: 0.8rem;"></button>
-                    </div>
-                {% endfor %}
-            {% endif %}
-        {% endwith %}
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category if category != 'message' else 'info' }} alert-dismissible fade show shadow-sm mb-3" role="alert">
+                            <i class="bi bi-info-circle me-2"></i> {{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+        </div>
     </div>
+
     {% block content %}{% endblock %}
 </main>
 
-<footer class="text-center py-3 text-muted mt-auto" style="font-size: 0.8rem;">
-    <hr class="opacity-10 container mb-2">
-    <span>&copy; 2026 CM Manager - <b>Desenvolvido por Vitor Henriques</b></span>
+<footer class="text-center text-muted mt-auto">
+    <div class="container">
+        <span>&copy; 2026 CM Manager - <b>Desenvolvido por Vitor Henriques</b></span>
+    </div>
 </footer>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

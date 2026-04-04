@@ -1,10 +1,13 @@
-import sqlite3
+import os
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from flask_login import login_user, login_required, logout_user, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 from models import get_db_connection, User
 
 main = Blueprint('main', __name__)
+
+def get_placeholder():
+    return "%s" if os.environ.get('DATABASE_URL') else "?"
 
 @main.route('/register', methods=['GET', 'POST'])
 def register():
@@ -13,15 +16,16 @@ def register():
         password = request.form.get('password')
         hashed_pw = generate_password_hash(password, method='pbkdf2:sha256')
         
+        p = get_placeholder()
         try:
             conn = get_db_connection()
-            conn.execute("INSERT INTO users (username, password) VALUES (?, ?)", (username, hashed_pw))
+            conn.execute(f"INSERT INTO users (username, password) VALUES ({p}, {p})", (username, hashed_pw))
             conn.commit()
             conn.close()
             flash("Conta criada com sucesso!", "success")
             return redirect(url_for('main.login'))
-        except sqlite3.IntegrityError:
-            flash("Este nome de usuário já está em uso.", "danger")
+        except Exception:
+            flash("Erro ao criar conta. Talvez o usuário já exista.", "danger")
     return render_template('register.html')
 
 @main.route('/login', methods=['GET', 'POST'])
@@ -32,8 +36,10 @@ def login():
     if request.method == 'POST':
         username = request.form.get('username')
         password = request.form.get('password')
+        p = get_placeholder()
+        
         conn = get_db_connection()
-        user = conn.execute("SELECT id, username, password FROM users WHERE username = ?", (username,)).fetchone()
+        user = conn.execute(f"SELECT id, username, password FROM users WHERE username = {p}", (username,)).fetchone()
         conn.close()
         
         if user and check_password_hash(user['password'], password):
@@ -63,8 +69,9 @@ def dashboard():
 @login_required
 def create_work():
     if request.method == 'POST':
+        p = get_placeholder()
         conn = get_db_connection()
-        conn.execute("INSERT INTO works (name, client, start_date, status) VALUES (?, ?, ?, ?)",
+        conn.execute(f"INSERT INTO works (name, client, start_date, status) VALUES ({p}, {p}, {p}, {p})",
                      (request.form['name'], request.form['client'], request.form['start_date'], request.form['status']))
         conn.commit()
         conn.close()
@@ -75,22 +82,26 @@ def create_work():
 @main.route('/works/<int:id>/edit', methods=['GET', 'POST'])
 @login_required
 def edit_work(id):
+    p = get_placeholder()
     conn = get_db_connection()
-    work = conn.execute("SELECT * FROM works WHERE id = ?", (id,)).fetchone()
+    work = conn.execute(f"SELECT * FROM works WHERE id = {p}", (id,)).fetchone()
+    
     if request.method == 'POST':
-        conn.execute("UPDATE works SET name = ?, client = ?, start_date = ?, status = ? WHERE id = ?",
+        conn.execute(f"UPDATE works SET name = {p}, client = {p}, start_date = {p}, status = {p} WHERE id = {p}",
                      (request.form['name'], request.form['client'], request.form['start_date'], request.form['status'], id))
         conn.commit()
         conn.close()
         return redirect(url_for('main.dashboard'))
+    
     conn.close()
     return render_template("work_edit.html", work=work)
 
 @main.route('/works/<int:id>/delete', methods=['POST'])
 @login_required
 def delete_work(id):
+    p = get_placeholder()
     conn = get_db_connection()
-    conn.execute("DELETE FROM works WHERE id = ?", (id,))
+    conn.execute(f"DELETE FROM works WHERE id = {p}", (id,))
     conn.commit()
     conn.close()
     return redirect(url_for('main.dashboard'))

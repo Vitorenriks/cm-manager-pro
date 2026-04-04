@@ -3,7 +3,6 @@ import psycopg2
 import psycopg2.extras
 import os
 from flask_login import UserMixin
-from flask import current_app
 
 DATABASE = 'works.db'
 
@@ -14,21 +13,11 @@ class User(UserMixin):
 
 def get_db_connection():
     db_url = os.environ.get('DATABASE_URL')
-    
     if db_url:
         if db_url.startswith("postgres://"):
             db_url = db_url.replace("postgres://", "postgresql://", 1)
-        
         conn = psycopg2.connect(db_url)
         conn.cursor_factory = psycopg2.extras.DictCursor
-        
-        if not hasattr(conn, 'execute'):
-            def execute_wrapper(sql, params=None):
-                cur = conn.cursor()
-                cur.execute(sql, params)
-                return cur
-            conn.execute = execute_wrapper
-            
         return conn
     else:
         conn = sqlite3.connect(DATABASE)
@@ -38,29 +27,24 @@ def get_db_connection():
 def init_db():
     db_url = os.environ.get('DATABASE_URL')
     conn = get_db_connection()
+    id_type = "SERIAL PRIMARY KEY" if db_url else "INTEGER PRIMARY KEY AUTOINCREMENT"
     
-    if db_url:
-        id_type = "SERIAL PRIMARY KEY"
-    else:
-        id_type = "INTEGER PRIMARY KEY AUTOINCREMENT"
-
-    conn.execute(f'''
-        CREATE TABLE IF NOT EXISTS users (
-            id {id_type},
-            username TEXT UNIQUE NOT NULL,
-            password TEXT NOT NULL
-        )
-    ''')
-    
-    conn.execute(f'''
-        CREATE TABLE IF NOT EXISTS works (
-            id {id_type},
-            name TEXT NOT NULL,
-            client TEXT NOT NULL,
-            start_date TEXT NOT NULL,
-            status TEXT NOT NULL
-        )
-    ''')
-    
+    with conn.cursor() as cur:
+        cur.execute(f'''
+            CREATE TABLE IF NOT EXISTS users (
+                id {id_type},
+                username TEXT UNIQUE NOT NULL,
+                password TEXT NOT NULL
+            )
+        ''')
+        cur.execute(f'''
+            CREATE TABLE IF NOT EXISTS works (
+                id {id_type},
+                name TEXT NOT NULL,
+                client TEXT NOT NULL,
+                start_date TEXT NOT NULL,
+                status TEXT NOT NULL
+            )
+        ''')
     conn.commit()
     conn.close()

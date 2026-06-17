@@ -1,7 +1,7 @@
 import os
 from flask import Flask
 from flask_login import LoginManager
-from models import init_db, get_db_connection, User 
+from models import get_db_connection, User
 from routes import main
 
 app = Flask(__name__)
@@ -15,7 +15,6 @@ if uri and uri.startswith("postgres://"):
 app.config['DATABASE_URL'] = uri or 'sqlite:///database.db'
 
 # Inicializa o banco de dados
-init_db()
 
 login_manager = LoginManager()
 login_manager.init_app(app)

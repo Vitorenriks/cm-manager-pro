@@ -55,7 +55,7 @@ O **CM Manager Pro** é uma plataforma de gestão de obras projetada para trazer
 
 ## Tech Stack
 - **Backend:** Python 3.x / Flask
-- **Database:** **PostgreSQL** (Production) / SQLAlchemy (ORM)
+- **Database:** **PostgreSQL** (Production)
 - **Frontend:** HTML5, CSS3 (Modern UI), Bootstrap 5, Jinja2
 - **Security:** Werkzeug Security / Flask-Login
 - **Deployment:** Gunicorn / Render

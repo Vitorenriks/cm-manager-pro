@@ -17,7 +17,11 @@ def get_db_connection():
         if db_url.startswith("postgres://"):
             db_url = db_url.replace("postgres://", "postgresql://", 1)
         
-        conn = psycopg2.connect(db_url, sslmode='require')
+        conn = psycopg2.connect(
+            db_url, 
+            sslmode='require', 
+            connect_timeout=10
+        )
         conn.cursor_factory = psycopg2.extras.DictCursor
         return conn
     else:
@@ -26,26 +30,33 @@ def get_db_connection():
         return conn
 
 def init_db():
-    db_url = os.environ.get('DATABASE_URL')
-    conn = get_db_connection()
-    id_type = "SERIAL PRIMARY KEY" if db_url else "INTEGER PRIMARY KEY AUTOINCREMENT"
-    
-    with conn.cursor() as cur:
-        cur.execute(f'''
-            CREATE TABLE IF NOT EXISTS users (
-                id {id_type},
-                username TEXT UNIQUE NOT NULL,
-                password TEXT NOT NULL
-            )
-        ''')
-        cur.execute(f'''
-            CREATE TABLE IF NOT EXISTS works (
-                id {id_type},
-                name TEXT NOT NULL,
-                client TEXT NOT NULL,
-                start_date TEXT NOT NULL,
-                status TEXT NOT NULL
-            )
-        ''')
-    conn.commit()
-    conn.close()
+    conn = None
+    try:
+        db_url = os.environ.get('DATABASE_URL')
+        conn = get_db_connection()
+        id_type = "SERIAL PRIMARY KEY" if db_url else "INTEGER PRIMARY KEY AUTOINCREMENT"
+        
+        with conn.cursor() as cur:
+            cur.execute(f'''
+                CREATE TABLE IF NOT EXISTS users (
+                    id {id_type},
+                    username TEXT UNIQUE NOT NULL,
+                    password TEXT NOT NULL
+                )
+            ''')
+            cur.execute(f'''
+                CREATE TABLE IF NOT EXISTS works (
+                    id {id_type},
+                    name TEXT NOT NULL,
+                    client TEXT NOT NULL,
+                    start_date TEXT NOT NULL,
+                    status TEXT NOT NULL
+                )
+            ''')
+        conn.commit()
+    except Exception:
+        pass
+    finally:
+        if conn:
+            conn.close()
+            
